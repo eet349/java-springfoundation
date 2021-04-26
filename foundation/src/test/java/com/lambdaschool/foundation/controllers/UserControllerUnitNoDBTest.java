@@ -76,16 +76,16 @@ public class UserControllerUnitNoDBTest
         // admin, data, user
         User u1 = new User("admin",
             "ILuvM4th!",
-            "admin@lambdaschool.test");
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r1));
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r2));
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r3));
+            "admin@lambdaschool.test", "CLIENT");
+//        u1.getRoles()
+//            .add(new UserRoles(u1,
+//                r1));
+//        u1.getRoles()
+//            .add(new UserRoles(u1,
+//                r2));
+//        u1.getRoles()
+//            .add(new UserRoles(u1,
+//                r3));
 
         u1.getUseremails()
             .add(new Useremail(u1,
@@ -108,13 +108,13 @@ public class UserControllerUnitNoDBTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
             "1234567",
-            "cinnamon@lambdaschool.test");
-        u1.getRoles()
-            .add(new UserRoles(u2,
-                r2));
-        u1.getRoles()
-            .add(new UserRoles(u2,
-                r3));
+            "cinnamon@lambdaschool.test", "CLIENT");
+//        u1.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
+//        u1.getRoles()
+//            .add(new UserRoles(u2,
+//                r3));
 
         u2.getUseremails()
             .add(new Useremail(u2,
@@ -143,10 +143,10 @@ public class UserControllerUnitNoDBTest
         // user
         User u3 = new User("testingbarn",
             "ILuvM4th!",
-            "testingbarn@school.lambda");
-        u3.getRoles()
-            .add(new UserRoles(u3,
-                r1));
+            "testingbarn@school.lambda", "CLIENT");
+//        u3.getRoles()
+//            .add(new UserRoles(u3,
+//                r1));
 
         u3.getUseremails()
             .add(new Useremail(u3,
@@ -160,20 +160,20 @@ public class UserControllerUnitNoDBTest
 
         User u4 = new User("testingcat",
             "password",
-            "testingcat@school.lambda");
-        u4.getRoles()
-            .add(new UserRoles(u4,
-                r2));
+            "testingcat@school.lambda", "CLIENT");
+//        u4.getRoles()
+//            .add(new UserRoles(u4,
+//                r2));
 
         u4.setUserid(104);
         userList.add(u4);
 
         User u5 = new User("testingdog",
             "password",
-            "testingdog@school.lambda");
-        u4.getRoles()
-            .add(new UserRoles(u5,
-                r2));
+            "testingdog@school.lambda", "CLIENT");
+//        u4.getRoles()
+//            .add(new UserRoles(u5,
+//                r2));
 
         u5.setUserid(105);
         userList.add(u5);

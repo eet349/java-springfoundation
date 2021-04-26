@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "classes")
-public class FitnessClass extends Auditable{
+public class FitnessClass extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long classid;
@@ -24,14 +26,33 @@ public class FitnessClass extends Auditable{
     @JsonIgnoreProperties(value = "classes", allowSetters = true)
     private Instructor instructor;
 
+    @ManyToMany(mappedBy = "classes")
+    private Set<User> users = new HashSet<>();
 
     public FitnessClass() {
     }
     //
-    //  TODO: Create the nonempty constuctor once we have all the field/relational fields
+    //  TODO: Create the nonempty constructor once we have all the field/relational fields
     //
 
 
+    public FitnessClass(String name,
+                        String type,
+                        Date starttime,
+                        int duration,
+                        String intensitylevel,
+                        String location,
+                        int numregisteredattendees,
+                        Instructor instructor) {
+        this.name = name;
+        this.type = type;
+        this.starttime = starttime;
+        this.duration = duration;
+        this.intensitylevel = intensitylevel;
+        this.location = location;
+        this.numregisteredattendees = numregisteredattendees;
+        this.instructor = instructor;
+    }
 
     public long getClassid() {
         return classid;
@@ -96,7 +117,24 @@ public class FitnessClass extends Auditable{
     public void setNumregisteredattendees(int numregisteredattendees) {
         this.numregisteredattendees = numregisteredattendees;
     }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
     //
     //  TODO: Create getters and setter for the relational fields
     //
+
 }

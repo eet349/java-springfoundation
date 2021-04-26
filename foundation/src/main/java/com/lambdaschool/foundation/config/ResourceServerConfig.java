@@ -52,7 +52,8 @@ public class ResourceServerConfig
                 "/v2/api-docs",
                 "/webjars/**",
                 "/createnewclient",
-                    "/createnewinstructor")
+                    "/createnewinstructor",
+                    "/classes/classes")
             .permitAll()
             .antMatchers(HttpMethod.POST,
                 "/users/**")

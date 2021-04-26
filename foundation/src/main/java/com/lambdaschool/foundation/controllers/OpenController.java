@@ -1,8 +1,10 @@
 package com.lambdaschool.foundation.controllers;
 
+import com.lambdaschool.foundation.models.Instructor;
 import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.models.UserMinimum;
 import com.lambdaschool.foundation.models.UserRoles;
+import com.lambdaschool.foundation.services.InstructorService;
 import com.lambdaschool.foundation.services.RoleService;
 import com.lambdaschool.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class OpenController
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private InstructorService instructorService;
+
     /**
      * A method in this controller adds a new user to the application with the role User so needs access to Role Services to do this.
      */
@@ -72,10 +77,10 @@ public class OpenController
         newuser.setPrimaryemail(newminuser.getPrimaryemail());
 
         // add the default role of user
-        Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newuser,
-            roleService.findByName("user")));
-        newuser.setRoles(newRoles);
+//        Set<UserRoles> newRoles = new HashSet<>();
+//        newRoles.add(new UserRoles(newuser,
+//            roleService.findByName("client")));
+//        newuser.setRoles(newRoles);
 
         newuser = userService.save(newuser);
 
@@ -135,25 +140,26 @@ public class OpenController
             URISyntaxException
     {
         // Create the user
-        User newuser = new User();
+        Instructor newinstructor = new Instructor();
+//        User newuser = new User();
 
-        newuser.setUsername(newminuser.getUsername());
-        newuser.setPassword(newminuser.getPassword());
-        newuser.setPrimaryemail(newminuser.getPrimaryemail());
+        newinstructor.setUsername(newminuser.getUsername());
+        newinstructor.setPassword(newminuser.getPassword());
+        newinstructor.setPrimaryemail(newminuser.getPrimaryemail());
 
         // add the default role of user
-        Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newuser,
-                roleService.findByName("instructor")));
-        newuser.setRoles(newRoles);
+//        Set<UserRoles> newRoles = new HashSet<>();
+//        newRoles.add(new UserRoles(newuser,
+//                roleService.findByName("instructor")));
+//        newuser.setRoles(newRoles);
 
-        newuser = userService.save(newuser);
+        newinstructor = instructorService.save(newinstructor);
 
         // set the location header for the newly created resource
         // The location comes from a different controller!
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
-                .buildAndExpand(newuser.getUserid())
+                .buildAndExpand(newinstructor.getInstructorid())
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 

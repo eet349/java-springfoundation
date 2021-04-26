@@ -118,10 +118,10 @@ public class UserServiceImplWithDBTest
 
         User u2 = new User("tiger",
             "ILuvMath!",
-            "tiger@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
+            "tiger@school.lambda", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
         u2.getUseremails()
             .add(new Useremail(u2,
                 "tiger@tiger.local"));
@@ -146,10 +146,10 @@ public class UserServiceImplWithDBTest
 
         User u2 = new User("tiger",
             "ILuvMath!",
-            "tiger@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
+            "tiger@school.lambda", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
         u2.getUseremails()
             .add(new Useremail(u2,
                 "tiger@tiger.local"));
@@ -175,10 +175,10 @@ public class UserServiceImplWithDBTest
 
         User u2 = new User("mojo",
             "ILuvMath!",
-            "mojo@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
+            "mojo@school.lambda", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
         u2.getUseremails()
             .add(new Useremail(u2,
                 "mojo@corgi.local"));
@@ -207,10 +207,10 @@ public class UserServiceImplWithDBTest
 
         User u2 = new User("cinnamon",
             "password",
-            "cinnamon@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
+            "cinnamon@school.lambda", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
 
         u2.getUseremails()
             .add(new Useremail(u2,
@@ -245,10 +245,10 @@ public class UserServiceImplWithDBTest
 
         User u2 = new User("cinnamon",
             "password",
-            "cinnamon@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
+            "cinnamon@school.lambda", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
         u2.getUseremails()
             .add(new Useremail(u2,
                 "cinnamon@mymail.thump"));

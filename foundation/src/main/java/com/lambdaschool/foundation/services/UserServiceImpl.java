@@ -32,8 +32,8 @@ public class UserServiceImpl
     /**
      * Connects this service to the Role table
      */
-    @Autowired
-    private RoleService roleService;
+//    @Autowired
+//    private RoleService roleService;
 
     @Autowired
     private HelperFunctions helperFunctions;
@@ -104,17 +104,7 @@ public class UserServiceImpl
         newUser.setPrimaryemail(user.getPrimaryemail()
             .toLowerCase());
 
-        newUser.getRoles()
-            .clear();
-        for (UserRoles ur : user.getRoles())
-        {
-            Role addRole = roleService.findRoleById(ur.getRole()
-                .getRoleid());
-            newUser.getRoles()
-                .add(new UserRoles(newUser,
-                    addRole));
-        }
-
+        newUser.setRole("CLIENT");
         newUser.getUseremails()
             .clear();
         for (Useremail ue : user.getUseremails())
@@ -154,21 +144,21 @@ public class UserServiceImpl
                     .toLowerCase());
             }
 
-            if (user.getRoles()
-                .size() > 0)
-            {
-                currentUser.getRoles()
-                    .clear();
-                for (UserRoles ur : user.getRoles())
-                {
-                    Role addRole = roleService.findRoleById(ur.getRole()
-                        .getRoleid());
-
-                    currentUser.getRoles()
-                        .add(new UserRoles(currentUser,
-                            addRole));
-                }
-            }
+//            if (user.getRoles()
+//                .size() > 0)
+//            {
+//                currentUser.getRoles()
+//                    .clear();
+//                for (UserRoles ur : user.getRoles())
+//                {
+//                    Role addRole = roleService.findRoleById(ur.getRole()
+//                        .getRoleid());
+//
+//                    currentUser.getRoles()
+//                        .add(new UserRoles(currentUser,
+//                            addRole));
+//                }
+//            }
 
             if (user.getUseremails()
                 .size() > 0)

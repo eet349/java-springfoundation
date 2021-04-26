@@ -3,10 +3,11 @@ package com.lambdaschool.foundation;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import com.lambdaschool.foundation.models.Role;
-import com.lambdaschool.foundation.models.User;
-import com.lambdaschool.foundation.models.UserRoles;
-import com.lambdaschool.foundation.models.Useremail;
+import com.lambdaschool.foundation.models.*;
+import com.lambdaschool.foundation.repository.ClassesRepository;
+import com.lambdaschool.foundation.repository.InstructorRepository;
+import com.lambdaschool.foundation.services.ClassesService;
+import com.lambdaschool.foundation.services.InstructorService;
 import com.lambdaschool.foundation.services.RoleService;
 import com.lambdaschool.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -45,6 +48,17 @@ public class SeedData
     @Autowired
     UserService userService;
 
+    @Autowired
+    InstructorService instructorService;
+
+    @Autowired
+    InstructorRepository instructorrepo;
+
+    @Autowired
+    ClassesService classesService;
+
+    @Autowired
+    ClassesRepository classesrepo;
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -60,28 +74,23 @@ public class SeedData
                                    Exception
     {
         userService.deleteAll();
-        roleService.deleteAll();
-        Role r1 = new Role("admin");
-        Role r2 = new Role("user");
-        Role r3 = new Role("instructor");
+//        roleService.deleteAll();
+//        Role r1 = new Role("client");
+//        Role r2 = new Role("instructor");
+//
+//        r1 = roleService.save(r1);
+//        r2 = roleService.save(r2);
 
-        r1 = roleService.save(r1);
-        r2 = roleService.save(r2);
-        r3 = roleService.save(r3);
 
         // admin, data, user
         User u1 = new User("admin",
             "password",
-            "admin@lambdaschool.local");
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r1));
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r2));
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r3));
+            "admin@lambdaschool.local", "INSTRUCTOR");
+//        u1.getRoles()
+//            .add(new UserRoles(u1,
+//                r2));
+//        u1.setRole("INSTRUCTOR");
+
         u1.getUseremails()
             .add(new Useremail(u1,
                 "admin@email.local"));
@@ -89,18 +98,17 @@ public class SeedData
             .add(new Useremail(u1,
                 "admin@mymail.local"));
 
+
         userService.save(u1);
+
 
         // data, user
         User u2 = new User("cinnamon",
             "1234567",
-            "cinnamon@lambdaschool.local");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r3));
+            "cinnamon@lambdaschool.local", "CLIENT");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
         u2.getUseremails()
             .add(new Useremail(u2,
                 "cinnamon@mymail.local"));
@@ -115,10 +123,10 @@ public class SeedData
         // user
         User u3 = new User("barnbarn",
             "ILuvM4th!",
-            "barnbarn@lambdaschool.local");
-        u3.getRoles()
-            .add(new UserRoles(u3,
-                r2));
+            "barnbarn@lambdaschool.local", "CLIENT");
+//        u3.getRoles()
+//            .add(new UserRoles(u3,
+//                r2));
         u3.getUseremails()
             .add(new Useremail(u3,
                 "barnbarn@email.local"));
@@ -126,20 +134,48 @@ public class SeedData
 
         User u4 = new User("puttat",
             "password",
-            "puttat@school.lambda");
-        u4.getRoles()
-            .add(new UserRoles(u4,
-                r2));
+            "puttat@school.lambda", "CLIENT");
+//        u4.getRole()
+//            .add(new UserRoles(u4,
+//                r2));
         userService.save(u4);
 
         User u5 = new User("misskitty",
             "password",
-            "misskitty@school.lambda");
-        u5.getRoles()
-            .add(new UserRoles(u5,
-                r2));
+            "misskitty@school.lambda", "CLIENT");
+//        u5.getRole()
+//            .add(new UserRoles(u5,
+//                r2));
         userService.save(u5);
 
+        // Instructor
+        Instructor i1 = new Instructor("instructor", "password", "instructor@lambda.com", "INSTRUCTOR" );
+        i1.getClasses().add(new FitnessClass("Pilates for beginners",
+                "PILATES",
+                new Date(),
+                45,
+                "BEGINNER",
+                "online",
+                0,
+                i1));
+
+        Instructor i2 = new Instructor("Chad", "fit4ever", "sofit@sofit.com", "INSTRUCTOR");
+
+        Instructor i3 = new Instructor("Brad", "xfit4lyfe", "xfit@xfit.com", "INSTRUCTOR");
+//        i3.setInstructorid(3);
+
+        instructorService.save(i1);
+        instructorService.save(i2);
+//        instructorService.save(i3);
+        instructorrepo.save(i3);
+        // Fitness Classes
+        FitnessClass f1 = new FitnessClass("Itermediate Cross Fit", "XFIT", new Date(), 60, "INTERMEDIATE", "downtown la", 0, i3 );
+        f1.setInstructor(i3);
+
+//        classesService.save(f1);
+        classesrepo.save(f1);
+
+        //-----------------------------------------------------------
         if (false)
         {
             // using JavaFaker create a bunch of regular users
@@ -159,10 +195,10 @@ public class SeedData
                     .username(),
                     "password",
                     nameFaker.internet()
-                        .emailAddress());
-                fakeUser.getRoles()
-                    .add(new UserRoles(fakeUser,
-                        r2));
+                        .emailAddress(),  "CLIENT");
+//                fakeUser.getRoles()
+//                    .add(new UserRoles(fakeUser,
+//                        r2));
                 fakeUser.getUseremails()
                     .add(new Useremail(fakeUser,
                         fakeValuesService.bothify("????##@gmail.com")));

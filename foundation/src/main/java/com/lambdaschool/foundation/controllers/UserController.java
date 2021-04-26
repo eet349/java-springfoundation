@@ -1,6 +1,8 @@
 package com.lambdaschool.foundation.controllers;
 
+import com.lambdaschool.foundation.models.Instructor;
 import com.lambdaschool.foundation.models.User;
+import com.lambdaschool.foundation.services.InstructorService;
 import com.lambdaschool.foundation.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private InstructorService instructorService;
+
     /**
      * Returns a list of all users
      * <br>Example: <a href="http://localhost:2019/users/users">http://localhost:2019/users/users</a>
@@ -37,15 +42,24 @@ public class UserController
      * @return JSON list of all users with a status of OK
      * @see UserService#findAll() UserService.findAll()
      */
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping(value = "/users",
+//    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
+    @GetMapping(value = "/clients",
         produces = "application/json")
-    public ResponseEntity<?> listAllUsers()
+    public ResponseEntity<?> listAllClients()
     {
-        List<User> myUsers = userService.findAll();
-        return new ResponseEntity<>(myUsers,
+        List<User> clientList = userService.findAll();
+        return new ResponseEntity<>(clientList,
             HttpStatus.OK);
     }
+    @GetMapping(value = "/instructors",
+        produces = "application/json")
+    public ResponseEntity<?> listAllInstructors()
+    {
+        List<Instructor> instructorList = instructorService.findAll();
+        return new ResponseEntity<>(instructorList,
+            HttpStatus.OK);
+    }
+
 
     /**
      * Returns a single user based off a user id number
@@ -93,7 +107,7 @@ public class UserController
      * @return A JSON list of users you seek
      * @see UserService#findByNameContaining(String) UserService.findByNameContaining(String)
      */
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @GetMapping(value = "/user/name/like/{userName}",
         produces = "application/json")
     public ResponseEntity<?> getUserLikeName(

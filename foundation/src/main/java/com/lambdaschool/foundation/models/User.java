@@ -64,12 +64,23 @@ public class User
      * Part of the join relationship between user and role
      * connects users to the user role combination
      */
-    @OneToMany(mappedBy = "user",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
-    @JsonIgnoreProperties(value = "user",
-        allowSetters = true)
-    private Set<UserRoles> roles = new HashSet<>();
+//    @OneToMany(mappedBy = "user",
+//        cascade = CascadeType.ALL,
+//        orphanRemoval = true)
+//    @JsonIgnoreProperties(value = "user",
+//        allowSetters = true)
+//    private Set<UserRoles> roles = new HashSet<>();
+
+//    private Role role = new Role();
+
+
+    private String role;
+    @ManyToMany()
+    @JoinTable(name = "userclasses",
+    joinColumns = @JoinColumn(name = "userid"),
+    inverseJoinColumns = @JoinColumn(name = "classid"))
+    Set<FitnessClass> classes = new HashSet<>();
+
 
     /**
      * Default constructor used primarily by the JPA.
@@ -90,11 +101,13 @@ public class User
     public User(
         String username,
         String password,
-        String primaryemail)
+        String primaryemail, String role)
     {
         setUsername(username);
         setPassword(password);
         this.primaryemail = primaryemail;
+        this.role = role; //= "CLIENT";
+//        role = new Role("CLIENT");
     }
 
     /**
@@ -211,19 +224,47 @@ public class User
      *
      * @return A list of user role combinations associated with this user
      */
-    public Set<UserRoles> getRoles()
-    {
-        return roles;
+//    public Set<UserRoles> getRoles()
+//    {
+//        return roles;
+//    }
+
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     /**
      * Setter for user role combinations
      *
-     * @param roles Change the list of user role combinations associated with this user to this one
+//     * @param roles Change the list of user role combinations associated with this user to this one
      */
-    public void setRoles(Set<UserRoles> roles)
-    {
-        this.roles = roles;
+//    public void setRoles(Set<UserRoles> roles)
+//    {
+//        this.roles = roles;
+//    }
+
+
+
+
+    public Set<FitnessClass> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Set<FitnessClass> classes) {
+        this.classes = classes;
     }
 
     /**
@@ -237,13 +278,14 @@ public class User
     {
         List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
 
-        for (UserRoles r : this.roles)
-        {
-            String myRole = "ROLE_" + r.getRole()
-                .getName()
-                .toUpperCase();
-            rtnList.add(new SimpleGrantedAuthority(myRole));
-        }
+//        for (UserRoles r : this.roles)
+//        {
+//            String myRole = "ROLE_" + r.getRole()
+//                .getName()
+//                .toUpperCase();
+            rtnList.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+//            rtnList.add(new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase()));
+//        }
 
         return rtnList;
     }
