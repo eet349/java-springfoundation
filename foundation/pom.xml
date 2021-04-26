@@ -112,7 +112,7 @@
     </dependencies>
 
     <build>
-        <finalName>web40j-anywhere-fitness</finalName>
+        <finalName>team-32-anywhere-fitness</finalName>
 
         <plugins>
             <plugin>
