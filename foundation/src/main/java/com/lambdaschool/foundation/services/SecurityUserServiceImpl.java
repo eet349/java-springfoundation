@@ -1,7 +1,9 @@
 package com.lambdaschool.foundation.services;
 
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
+import com.lambdaschool.foundation.models.Instructor;
 import com.lambdaschool.foundation.models.User;
+import com.lambdaschool.foundation.repository.InstructorRepository;
 import com.lambdaschool.foundation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +27,9 @@ public class SecurityUserServiceImpl
     @Autowired
     private UserRepository userrepos;
 
+    @Autowired
+    private InstructorRepository instructorrepo;
+
     /**
      * Verifies that the user is correct and if so creates the authenticated user
      *
@@ -38,13 +43,36 @@ public class SecurityUserServiceImpl
         throws
         ResourceNotFoundException
     {
-        User user = userrepos.findByUsername(s.toLowerCase());
-        if (user == null)
-        {
-            throw new ResourceNotFoundException("Invalid username or password.");
+        if(userrepos.findByUsername(s.toLowerCase()) instanceof User) {
+            User user = userrepos.findByUsername(s.toLowerCase());
+            if (user == null) {
+                throw new ResourceNotFoundException("Invalid username or password.");
+            }
+            return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(),
+                user.getAuthority());
+        }   else {
+            Instructor instructor = instructorrepo.findInstructorByUsername(s.toLowerCase());
+            if (instructor == null) {
+                throw new ResourceNotFoundException("Invalid username or password.");
+            }
+            return new org.springframework.security.core.userdetails.User(instructor.getUsername(),
+                    instructor.getPassword(),
+                    instructor.getAuthority());
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-            user.getPassword(),
-            user.getAuthority());
+
     }
+//
+//
+//    {
+//        User user = userrepos.findByUsername(s.toLowerCase());
+//
+//        if (user == null)
+//        {
+//            throw new ResourceNotFoundException("Invalid username or password.");
+//        }
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+//            user.getPassword(),
+//            user.getAuthority());
+//    }
 }

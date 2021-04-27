@@ -84,7 +84,8 @@ public class HelperFunctionsImpl
             .getAuthentication();
         if (username.equalsIgnoreCase(authentication.getName()
             .toLowerCase()) || authentication.getAuthorities()
-            .contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+            .contains(new SimpleGrantedAuthority("ROLE_INSTRUCTOR")))
+//            .contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
         {
             // this user can make this change
             return true;

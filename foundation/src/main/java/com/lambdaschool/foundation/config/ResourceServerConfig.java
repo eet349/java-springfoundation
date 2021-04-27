@@ -52,25 +52,26 @@ public class ResourceServerConfig
                 "/v2/api-docs",
                 "/webjars/**",
                 "/createnewclient",
-                    "/createnewinstructor",
-                    "/classes/classes")
+                "/createnewinstructor",
+                "/classes/classes")
             .permitAll()
             .antMatchers(HttpMethod.POST,
-                "/users/**")
-            .hasAnyRole("ADMIN")
+                "/users/**", "/classes/class")
+            .hasAnyRole("INSTRUCTOR")
             .antMatchers(HttpMethod.DELETE,
-                "/users/**")
-            .hasAnyRole("ADMIN")
+                "/users/**","/classes/class/**")
+            .hasAnyRole("INSTRUCTOR")
             .antMatchers(HttpMethod.PUT,
                 "/users/**")
-            .hasAnyRole("ADMIN")
+            .hasAnyRole("INSTRUCTOR")
             .antMatchers("/users/**",
                 "/useremails/**",
                 "/oauth/revoke-token",
-                "/logout")
+                "/logout",
+                    "/getuserinfo")
             .authenticated()
             .antMatchers("/roles/**")
-            .hasAnyRole("ADMIN")
+            .hasAnyRole("INSTRUCTOR")
             .anyRequest()
             .denyAll()
             .and()

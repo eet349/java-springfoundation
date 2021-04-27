@@ -147,12 +147,6 @@ public class OpenController
         newinstructor.setPassword(newminuser.getPassword());
         newinstructor.setPrimaryemail(newminuser.getPrimaryemail());
 
-        // add the default role of user
-//        Set<UserRoles> newRoles = new HashSet<>();
-//        newRoles.add(new UserRoles(newuser,
-//                roleService.findByName("instructor")));
-//        newuser.setRoles(newRoles);
-
         newinstructor = instructorService.save(newinstructor);
 
         // set the location header for the newly created resource

@@ -107,7 +107,6 @@ public class User
         setPassword(password);
         this.primaryemail = primaryemail;
         this.role = role; //= "CLIENT";
-//        role = new Role("CLIENT");
     }
 
     /**

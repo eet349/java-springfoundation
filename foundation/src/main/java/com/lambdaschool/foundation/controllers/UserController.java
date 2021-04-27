@@ -236,8 +236,14 @@ public class UserController
         produces = {"application/json"})
     public ResponseEntity<?> getCurrentUserInfo(Authentication authentication)
     {
-        User u = userService.findByName(authentication.getName());
-        return new ResponseEntity<>(u,
+        if(userService.findByName(authentication.getName()) instanceof User) {
+            User user = userService.findByName(authentication.getName());
+        return new ResponseEntity<>(user,
             HttpStatus.OK);
+        } else {
+            Instructor instructor = instructorService.findByName(authentication.getName());
+            return new ResponseEntity<>(instructor,
+                    HttpStatus.OK);
+        }
     }
 }

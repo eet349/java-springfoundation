@@ -44,15 +44,10 @@ public class Instructor extends Auditable{
     public Instructor() {
     }
 
-//    public Instructor(String username) {
-//        this.username = username;
-//        role = "INSTRUCTOR";
-//    }
-
 
     public Instructor(String username, String password, String primaryemail, String role) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
         this.primaryemail = primaryemail;
         this.role = role; //= "INSTRUCTOR";
     }

@@ -36,6 +36,7 @@ public class ClassesServiceImpl implements ClassesService{
     @Transactional
     @Override
     public FitnessClass save(FitnessClass fitnessClass) {
+        System.out.println("made it this far");
         FitnessClass newFitnessClass = new FitnessClass();
         if (fitnessClass.getClassid() != 0 ){
             classesrepo.findById(fitnessClass.getClassid())
@@ -44,13 +45,14 @@ public class ClassesServiceImpl implements ClassesService{
 
         newFitnessClass.setName(fitnessClass.getName());
         newFitnessClass.setType(fitnessClass.getType());
+        newFitnessClass.setDate(fitnessClass.getDate());
         newFitnessClass.setStarttime(fitnessClass.getStarttime());
         newFitnessClass.setDuration(fitnessClass.getDuration());
-        newFitnessClass.setIntensitylevel(fitnessClass.getIntensitylevel());
+        newFitnessClass.setIntensitylevel(fitnessClass.getIntensitylevel().toUpperCase());
         newFitnessClass.setLocation(fitnessClass.getLocation());
         newFitnessClass.setNumregisteredattendees(fitnessClass.getNumregisteredattendees());
+        newFitnessClass.setMaxsize(fitnessClass.getMaxsize());
         newFitnessClass.setInstructor(instructorRepository.findInstructorByInstructorid(fitnessClass.getInstructor().getInstructorid()));
-//        newFitnessClass.setInstructor(fitnessClass.getInstructor());
 
         newFitnessClass.getUsers().clear();
         for(User u : fitnessClass.getUsers()) {
@@ -58,5 +60,11 @@ public class ClassesServiceImpl implements ClassesService{
         }
 
         return classesrepo.save(newFitnessClass);
+    }
+
+    public void delete(long id) {
+        classesrepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Class " + id + " Not Found!"));
+        classesrepo.deleteById(id);
     }
 }

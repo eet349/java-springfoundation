@@ -33,6 +33,18 @@ public class InstructorServiceImpl implements InstructorService{
         return instructorrepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor id " + id + " not found!"));
     }
+
+    @Override
+    public Instructor findByName(String name) {
+        Instructor instructor = instructorrepo.findInstructorByUsername(name);
+
+        if (instructor == null) {
+            throw new ResourceNotFoundException("Instructor " + name + " not found!");
+        }
+        return instructor;
+    }
+
+
     @Transactional
     @Override
     public Instructor save(Instructor instructor) {
@@ -51,24 +63,14 @@ public class InstructorServiceImpl implements InstructorService{
         newInstructor.setPasswordNoEncrypt(instructor.getPassword());
         newInstructor.setPrimaryemail(instructor.getPrimaryemail()
                 .toLowerCase());
-
-//        newInstructor.getRole()
-//                .clear();
-//        for (UserRoles ur : instructor.getRole())
-//        {
-//            Role addRole = roleService.findRoleById(ur.getRole()
-//                    .getRoleid());
-//            newUser.getRoles()
-//                    .add(new UserRoles(newUser,
-//                            addRole));
-////        }
+        newInstructor.setRole("INSTRUCTOR");
 
         newInstructor.getClasses()
                 .clear();
         for (FitnessClass fc : instructor.getClasses())
         {
             newInstructor.getClasses()
-                    .add(new FitnessClass(fc.getName(), fc.getType(), fc.getStarttime(), fc.getDuration(), fc.getIntensitylevel(), fc.getLocation(), fc.getUsers().size(), newInstructor));
+                    .add(new FitnessClass(fc.getName(), fc.getType(), fc.getDate(), fc.getStarttime(), fc.getDuration(), fc.getIntensitylevel(), fc.getLocation(), fc.getUsers().size(), fc.getMaxsize(), newInstructor));
         }
 
         return instructorrepo.save(newInstructor);

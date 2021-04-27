@@ -8,5 +8,6 @@ public interface ClassesService {
     List<FitnessClass> findAll();
     FitnessClass findFitnessClassById(Long id);
     FitnessClass save(FitnessClass fitnessClass);
+    void delete(long id);
 
 }

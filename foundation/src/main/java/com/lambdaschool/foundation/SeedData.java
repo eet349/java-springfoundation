@@ -152,11 +152,14 @@ public class SeedData
         Instructor i1 = new Instructor("instructor", "password", "instructor@lambda.com", "INSTRUCTOR" );
         i1.getClasses().add(new FitnessClass("Pilates for beginners",
                 "PILATES",
-                new Date(),
+//                new Date(),
+                "May 28th 21",
+                "6:15 am",
                 45,
                 "BEGINNER",
                 "online",
                 0,
+                30,
                 i1));
 
         Instructor i2 = new Instructor("Chad", "fit4ever", "sofit@sofit.com", "INSTRUCTOR");
@@ -164,12 +167,14 @@ public class SeedData
         Instructor i3 = new Instructor("Brad", "xfit4lyfe", "xfit@xfit.com", "INSTRUCTOR");
 //        i3.setInstructorid(3);
 
-        instructorService.save(i1);
-        instructorService.save(i2);
-//        instructorService.save(i3);
+        instructorrepo.save(i1);
+        instructorrepo.save(i2);
         instructorrepo.save(i3);
+//        instructorService.save(i1);
+//        instructorService.save(i2);
+//        instructorService.save(i3);
         // Fitness Classes
-        FitnessClass f1 = new FitnessClass("Itermediate Cross Fit", "XFIT", new Date(), 60, "INTERMEDIATE", "downtown la", 0, i3 );
+        FitnessClass f1 = new FitnessClass("Itermediate Cross Fit", "XFIT"/* new Date(),*/,"May 28th 21", "6:15 am",  60, "INTERMEDIATE", "downtown la", 0, 30,i3 );
         f1.setInstructor(i3);
 
 //        classesService.save(f1);

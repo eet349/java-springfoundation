@@ -15,11 +15,13 @@ public class FitnessClass extends Auditable {
     private long classid;
     private String name;
     private String type;
-    private Date starttime;
+    private String date;
+    private String starttime;
     private int duration;
     private String intensitylevel;  //  BEGINNER, INTERMEDIATE, ADVANCED
     private String location;
     private int numregisteredattendees;
+    private int maxsize;
 
     @ManyToOne
     @JoinColumn(name = "instructorid", nullable = false)
@@ -38,20 +40,24 @@ public class FitnessClass extends Auditable {
 
     public FitnessClass(String name,
                         String type,
-                        Date starttime,
+                        String date,
+                        String starttime,
                         int duration,
                         String intensitylevel,
                         String location,
                         int numregisteredattendees,
+                        int maxsize,
                         Instructor instructor) {
         this.name = name;
         this.type = type;
+        this.date = date;
         this.starttime = starttime;
         this.duration = duration;
         this.intensitylevel = intensitylevel;
         this.location = location;
         this.numregisteredattendees = numregisteredattendees;
         this.instructor = instructor;
+        this.maxsize = maxsize;
     }
 
     public long getClassid() {
@@ -78,11 +84,19 @@ public class FitnessClass extends Auditable {
         this.type = type;
     }
 
-    public Date getStarttime() {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Date starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 
@@ -137,4 +151,12 @@ public class FitnessClass extends Auditable {
     //  TODO: Create getters and setter for the relational fields
     //
 
+
+    public int getMaxsize() {
+        return maxsize;
+    }
+
+    public void setMaxsize(int maxsize) {
+        this.maxsize = maxsize;
+    }
 }
