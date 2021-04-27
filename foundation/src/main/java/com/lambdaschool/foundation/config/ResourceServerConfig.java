@@ -62,7 +62,10 @@ public class ResourceServerConfig
                 "/users/**","/classes/class/**")
             .hasAnyRole("INSTRUCTOR")
             .antMatchers(HttpMethod.PUT,
-                "/users/**")
+                "/users/**","/classes/class/**")
+            .hasAnyRole("INSTRUCTOR")
+                .antMatchers(HttpMethod.PATCH,
+                "/users/**","/classes/class/**")
             .hasAnyRole("INSTRUCTOR")
             .antMatchers("/users/**",
                 "/useremails/**",

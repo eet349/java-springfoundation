@@ -23,6 +23,14 @@ public class FitnessClass extends Auditable {
     private int numregisteredattendees;
     private int maxsize;
 
+    @Transient
+    public boolean hasduration = false;
+    @Transient
+    public boolean hasnumregisteredattendees = false;
+    @Transient
+    public boolean hasmaxsize = false;
+
+
     @ManyToOne
     @JoinColumn(name = "instructorid", nullable = false)
     @JsonIgnoreProperties(value = "classes", allowSetters = true)
@@ -56,8 +64,8 @@ public class FitnessClass extends Auditable {
         this.intensitylevel = intensitylevel;
         this.location = location;
         this.numregisteredattendees = numregisteredattendees;
-        this.instructor = instructor;
         this.maxsize = maxsize;
+        this.instructor = instructor;
     }
 
     public long getClassid() {
@@ -105,6 +113,7 @@ public class FitnessClass extends Auditable {
     }
 
     public void setDuration(int duration) {
+        hasduration = true;
         this.duration = duration;
     }
 
@@ -129,6 +138,7 @@ public class FitnessClass extends Auditable {
     }
 
     public void setNumregisteredattendees(int numregisteredattendees) {
+        hasnumregisteredattendees = true;
         this.numregisteredattendees = numregisteredattendees;
     }
 
@@ -157,6 +167,7 @@ public class FitnessClass extends Auditable {
     }
 
     public void setMaxsize(int maxsize) {
+        hasmaxsize = true;
         this.maxsize = maxsize;
     }
 }

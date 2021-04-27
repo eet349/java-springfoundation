@@ -19,6 +19,10 @@ public class ClassesServiceImpl implements ClassesService{
 
     @Autowired
     private InstructorRepository instructorRepository;
+
+    @Autowired
+    private HelperFunctions helperFunctions;
+
     @Override
     public List<FitnessClass> findAll() {
         List<FitnessClass> list = new ArrayList<>();
@@ -60,6 +64,50 @@ public class ClassesServiceImpl implements ClassesService{
         }
 
         return classesrepo.save(newFitnessClass);
+    }
+
+    @Override
+    public FitnessClass update(FitnessClass fitnessClass, long classid) {
+        FitnessClass currentFitnessClass = findFitnessClassById(classid);
+
+        if (classesrepo.findById(classid).isPresent()){
+
+
+            if(helperFunctions.isAuthorizedToMakeChange(classesrepo.findById(classid).get().getInstructor().getUsername())) {
+                if(fitnessClass.getName() != null) {
+                     currentFitnessClass.setName(fitnessClass.getName());
+                }
+                if (fitnessClass.getType() != null) {
+                    currentFitnessClass.setType(fitnessClass.getType());
+                }
+                if (fitnessClass.getDate() != null) {
+                    currentFitnessClass.setDate(fitnessClass.getDate());
+                }
+                if (fitnessClass.getStarttime() != null) {
+                    currentFitnessClass.setStarttime(fitnessClass.getStarttime());
+                }
+                if (fitnessClass.hasduration) {
+                    currentFitnessClass.setDuration(fitnessClass.getDuration());
+                }
+                if (fitnessClass.getIntensitylevel() != null) {
+                    currentFitnessClass.setIntensitylevel(fitnessClass.getIntensitylevel());
+                }
+                if (fitnessClass.getLocation() != null) {
+                    currentFitnessClass.setLocation(fitnessClass.getLocation());
+                }
+                if (fitnessClass.hasnumregisteredattendees) {
+                    currentFitnessClass.setNumregisteredattendees(fitnessClass.getNumregisteredattendees());
+            }
+               if (fitnessClass.hasmaxsize) {
+                    currentFitnessClass.setMaxsize(fitnessClass.getMaxsize());
+                }
+            } else {
+                throw new ResourceNotFoundException("This user is not authorized to make this change.");
+            }
+        } else {
+            throw new ResourceNotFoundException("Class with id " + classid + " not found!");
+        }
+        return null;
     }
 
     public void delete(long id) {

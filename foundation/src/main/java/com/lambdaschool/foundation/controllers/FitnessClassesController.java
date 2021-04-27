@@ -31,9 +31,9 @@ public class FitnessClassesController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     //  POST 		/classes/class - create a class
-//    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
 //    @PostMapping(value = "/class",
 //            consumes = "application/json")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @PostMapping(value = "/class", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> addFitnessClass(
             @Valid
@@ -56,13 +56,27 @@ public class FitnessClassesController {
                 HttpStatus.CREATED);
     }
 
-    //  PUT/PATCH	/classes/class/{classid} - edit a class
+    //  PATCH	/classes/class/{classid} - edit a class
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @PatchMapping(value = "/class/{classid}")
-    public ResponseEntity<?> updateFitnessClass() {
+    public ResponseEntity<?> updateFitnessClass(@RequestBody FitnessClass updateFitnessClass, @PathVariable long classid) {
+    classesService.update(updateFitnessClass, classid);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
+    @PutMapping(value = "/class/{classid}")
+    public ResponseEntity<?> updateCompleteFitnessClass(@Valid @RequestBody FitnessClass updateFitnessClass, @PathVariable long classid) {
+
+        updateFitnessClass.setClassid(classid);
+        classesService.save(updateFitnessClass);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     //  DELETE		/classes/class/{classid} - delete a class
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @DeleteMapping(value = "/class/{classid}")
     public ResponseEntity<?> deleteFitnessClass(@PathVariable long classid) {
     classesService.delete(classid);
