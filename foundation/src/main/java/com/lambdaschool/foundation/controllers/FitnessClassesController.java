@@ -76,7 +76,7 @@ public class FitnessClassesController {
     }
 
 //     @PreAuthorize("hasAnyRole('CLIENT')")
-    @PatchMapping(value = "/class/{classid}/addclient/{clientid}",/* consumes = "application/json",*/ produces = "application/json")
+    @PatchMapping(value = "/class/{classid}/addclient/{clientid}", produces = "application/json")
     public ResponseEntity<?> addClientToClass( @PathVariable long classid , @PathVariable long clientid) {
 
          FitnessClass rtnFitnessClass = classesService.addClient(classid, clientid);
@@ -84,7 +84,7 @@ public class FitnessClassesController {
          return new ResponseEntity<>(rtnFitnessClass, HttpStatus.OK);
      }
 //    @PreAuthorize("hasAnyRole('CLIENT')")
-    @PatchMapping(value = "/class/{classid}/removeclient/{clientid}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(value = "/class/{classid}/removeclient/{clientid}", produces = "application/json")
     public ResponseEntity<?> removeClientFromClass( @PathVariable long classid, @PathVariable long clientid) {
 
         FitnessClass rtnFitnessClass = classesService.removeClient(classid, clientid);

@@ -130,7 +130,17 @@ public class ClassesServiceImpl implements ClassesService{
 
     @Override
     public FitnessClass removeClient(long classid, long clientid) {
-        return null;
+        FitnessClass fitnessClass = classesrepo.findById(classid)
+                .orElseThrow(()->new ResourceNotFoundException("Class " + classid + "Not Found!"));
+        User client = userrepo.findById(clientid)
+                .orElseThrow(() -> new ResourceNotFoundException("Client " + clientid + " Not Found!"));
+
+        client.getClasses().remove(fitnessClass);
+        userrepo.save(client);
+        fitnessClass.getUsers().remove(client);
+        classesrepo.save(fitnessClass);
+
+        return fitnessClass;
     }
 
     public void delete(long id) {
