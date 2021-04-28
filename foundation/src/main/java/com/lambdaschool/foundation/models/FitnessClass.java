@@ -37,6 +37,7 @@ public class FitnessClass extends Auditable {
     private Instructor instructor;
 
     @ManyToMany(mappedBy = "classes")
+    @JsonIgnoreProperties(value = "classes")
     private Set<User> users = new HashSet<>();
 
     public FitnessClass() {

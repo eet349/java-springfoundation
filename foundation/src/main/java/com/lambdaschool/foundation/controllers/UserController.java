@@ -240,7 +240,7 @@ public class UserController
     {
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
         authentication.getAuthorities().iterator().forEachRemaining((auth) -> {roles.add((SimpleGrantedAuthority) auth);});
-        if(roles.get(0).equals("ROLE_CLIENT")) {
+        if(roles.get(0).toString().equals("ROLE_CLIENT")) {
             User user = userService.findByName(authentication.getName());
         return new ResponseEntity<>(user,
             HttpStatus.OK);

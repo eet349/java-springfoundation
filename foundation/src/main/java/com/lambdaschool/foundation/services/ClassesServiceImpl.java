@@ -5,6 +5,7 @@ import com.lambdaschool.foundation.models.FitnessClass;
 import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.repository.ClassesRepository;
 import com.lambdaschool.foundation.repository.InstructorRepository;
+import com.lambdaschool.foundation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ import java.util.List;
 public class ClassesServiceImpl implements ClassesService{
     @Autowired
     private ClassesRepository classesrepo;
+
+    @Autowired
+    private UserRepository userrepo;
 
     @Autowired
     private InstructorRepository instructorRepository;
@@ -112,7 +116,16 @@ public class ClassesServiceImpl implements ClassesService{
 
     @Override
     public FitnessClass addClient(long classid, long clientid) {
-        return null;
+        FitnessClass fitnessClass = classesrepo.findById(classid)
+                .orElseThrow(()->new ResourceNotFoundException("Class " + classid + "Not Found!"));
+        User client = userrepo.findById(clientid)
+                .orElseThrow(() -> new ResourceNotFoundException("Client " + clientid + " Not Found!"));
+
+        client.getClasses().add(fitnessClass);
+        userrepo.save(client);
+        fitnessClass.getUsers().add(client);
+        classesrepo.save(fitnessClass);
+        return fitnessClass;
     }
 
     @Override

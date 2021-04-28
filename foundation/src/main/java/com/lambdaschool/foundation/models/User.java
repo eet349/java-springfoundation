@@ -79,6 +79,7 @@ public class User
     @JoinTable(name = "userclasses",
     joinColumns = @JoinColumn(name = "userid"),
     inverseJoinColumns = @JoinColumn(name = "classid"))
+    @JsonIgnoreProperties(value = "users")
     Set<FitnessClass> classes = new HashSet<>();
 
 
