@@ -9,6 +9,8 @@ public interface ClassesService {
     FitnessClass findFitnessClassById(Long id);
     FitnessClass save(FitnessClass fitnessClass);
     FitnessClass update(FitnessClass fitnessClass, long classid);
+    FitnessClass addClient(long classid, long clientid);
+    FitnessClass removeClient(long classid, long clientid);
     void delete(long id);
 
 }

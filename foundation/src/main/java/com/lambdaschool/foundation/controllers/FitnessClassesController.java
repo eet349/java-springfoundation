@@ -40,7 +40,6 @@ public class FitnessClassesController {
             @RequestBody
                     FitnessClass newfitnessclass) throws URISyntaxException
 {
-    System.out.println("you have reached post Fitness class");
         newfitnessclass.setClassid(0);
         newfitnessclass = classesService.save(newfitnessclass);
 
@@ -58,22 +57,41 @@ public class FitnessClassesController {
 
     //  PATCH	/classes/class/{classid} - edit a class
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")
-    @PatchMapping(value = "/class/{classid}")
+    @PatchMapping(value = "/class/{classid}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> updateFitnessClass(@RequestBody FitnessClass updateFitnessClass, @PathVariable long classid) {
-    classesService.update(updateFitnessClass, classid);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        FitnessClass rtnFitnessClass = classesService.update(updateFitnessClass, classid);
+
+        return new ResponseEntity<>(rtnFitnessClass, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")
-    @PutMapping(value = "/class/{classid}")
+    @PutMapping(value = "/class/{classid}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> updateCompleteFitnessClass(@Valid @RequestBody FitnessClass updateFitnessClass, @PathVariable long classid) {
 
         updateFitnessClass.setClassid(classid);
-        classesService.save(updateFitnessClass);
+        FitnessClass rtnFitnessClass = classesService.save(updateFitnessClass);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(rtnFitnessClass, HttpStatus.OK);
     }
+
+//     @PreAuthorize("hasAnyRole('INSTRUCTOR')")
+//    @PatchMapping(value = "/class/{classid}", consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<?> addClientToClass( @PathVariable long classid , @PathVariable long clientid) {
+//
+//         FitnessClass rtnFitnessClass = classesService.addClient(classid, clientid);
+//
+//         return new ResponseEntity<>(rtnFitnessClass, HttpStatus.OK);
+//     }
+//    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
+//    @PatchMapping(value = "/class/{classid}/removeclient/{clientid}", consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<?> removeClientFromClass( @PathVariable long classid, @PathVariable long clientid) {
+//
+//        FitnessClass rtnFitnessClass = classesService.removeClient(classid, clientid);
+//
+//        return new ResponseEntity<>(rtnFitnessClass, HttpStatus.OK);
+//    }
+
 
     //  DELETE		/classes/class/{classid} - delete a class
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")

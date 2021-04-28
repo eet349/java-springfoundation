@@ -144,21 +144,6 @@ public class UserServiceImpl
                     .toLowerCase());
             }
 
-//            if (user.getRoles()
-//                .size() > 0)
-//            {
-//                currentUser.getRoles()
-//                    .clear();
-//                for (UserRoles ur : user.getRoles())
-//                {
-//                    Role addRole = roleService.findRoleById(ur.getRole()
-//                        .getRoleid());
-//
-//                    currentUser.getRoles()
-//                        .add(new UserRoles(currentUser,
-//                            addRole));
-//                }
-//            }
 
             if (user.getUseremails()
                 .size() > 0)

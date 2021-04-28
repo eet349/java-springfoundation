@@ -36,7 +36,9 @@ public class InstructorServiceImpl implements InstructorService{
 
     @Override
     public Instructor findByName(String name) {
+        System.out.println(name);
         Instructor instructor = instructorrepo.findInstructorByUsername(name);
+        System.out.println(instructor.getUsername());
 
         if (instructor == null) {
             throw new ResourceNotFoundException("Instructor " + name + " not found!");

@@ -26,7 +26,7 @@ public class UseremailServiceImpl
     private UseremailRepository useremailrepos;
 
     /**
-     * Connects this servive to the User Service
+     * Connects this service to the User Service
      */
     @Autowired
     private UserService userService;

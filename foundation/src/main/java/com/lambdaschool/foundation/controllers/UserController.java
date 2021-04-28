@@ -11,12 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -236,7 +238,9 @@ public class UserController
         produces = {"application/json"})
     public ResponseEntity<?> getCurrentUserInfo(Authentication authentication)
     {
-        if(userService.findByName(authentication.getName()) instanceof User) {
+        List<SimpleGrantedAuthority> roles = new ArrayList<>();
+        authentication.getAuthorities().iterator().forEachRemaining((auth) -> {roles.add((SimpleGrantedAuthority) auth);});
+        if(roles.get(0).equals("ROLE_CLIENT")) {
             User user = userService.findByName(authentication.getName());
         return new ResponseEntity<>(user,
             HttpStatus.OK);

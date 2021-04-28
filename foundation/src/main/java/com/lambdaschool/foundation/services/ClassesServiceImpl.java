@@ -110,6 +110,16 @@ public class ClassesServiceImpl implements ClassesService{
         return null;
     }
 
+    @Override
+    public FitnessClass addClient(long classid, long clientid) {
+        return null;
+    }
+
+    @Override
+    public FitnessClass removeClient(long classid, long clientid) {
+        return null;
+    }
+
     public void delete(long id) {
         classesrepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Class " + id + " Not Found!"));
